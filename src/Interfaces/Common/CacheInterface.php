@@ -1,10 +1,8 @@
 <?php
 
-
-declare(strict_types=1);
-
 namespace Demoniqus\CacheBundle\Interfaces\Common;
-interface CacheServiceInterface
+
+interface CacheInterface
 {
     /**
      * Put value to storage with key using some options
@@ -12,9 +10,9 @@ interface CacheServiceInterface
      * @param $key
      * @param $value
      * @param array|null $options
-     * @return CacheServiceInterface
+     * @return CacheInterface
      */
-    public function put($key, $value, ?array $options = []): CacheServiceInterface;
+    public function put(string $key, $value, ?array $options = []): CacheInterface;
 
     /**
      * Get value from storage by key
@@ -30,27 +28,10 @@ interface CacheServiceInterface
     public function has(string $key): bool;
 
     /**
-     * Configure service
-     *
-     * @param CacheServiceConfigInterface $config
-     * @return CacheServiceInterface
-     */
-    public function configure(CacheServiceConfigInterface $config): CacheServiceInterface;
-
-
-    /**
      * Delete key from storage
      *
      * @param string $key
-     * @return CacheServiceInterface
+     * @return CacheInterface
      */
-    public function delete(string $key): CacheServiceInterface;
-
-    /**
-     * Terminate service after using
-     *
-     * @return void
-     */
-    public function destruct(): void;
-
+    public function delete(string $key): CacheInterface;
 }

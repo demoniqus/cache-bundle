@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Demoniqus\CacheBundle\Factory;
 
-use Demoniqus\CacheBundle\Interfaces\Common\CacheServiceInterface;
+use Demoniqus\CacheBundle\Cache\CacheServiceInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class ServicesFactory implements ServicesFactoryInterface
