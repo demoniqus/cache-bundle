@@ -34,6 +34,7 @@ abstract class BaseCacheService implements CacheServiceInterface
 
     public function update(?ParamsBagInterface $paramsBag): CacheServiceInterface
     {
+        //TODO Заложить возможность dependency
         $this->cacheStorage->put(
             $this->generateCacheKey($paramsBag),
             $this->createData($paramsBag)
