@@ -23,4 +23,8 @@ class ParamsBag implements ParamsBagInterface
     {
         return $this->params[$paramName] ?? null;
     }
+    public function hasParam($paramName): bool
+    {
+        return array_key_exists($paramName, $this->params);
+    }
 }

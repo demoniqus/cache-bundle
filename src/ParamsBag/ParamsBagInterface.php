@@ -9,5 +9,6 @@ interface ParamsBagInterface
     public function setParam(string $key, $value): ParamsBagInterface;
 
     public function getParam($paramName);
+    public function hasParam($paramName): bool;
 
 }
