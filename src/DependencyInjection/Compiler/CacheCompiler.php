@@ -36,7 +36,7 @@ class CacheCompiler implements CompilerPassInterface
             $definition->addMethodCall(
                 'registerService',
                 [
-                    $serviceId,
+                    $tags[0]['alias'] ?? $tags['alias'] ?? $serviceId,
                     new Reference($serviceId),
                 ]
             );
