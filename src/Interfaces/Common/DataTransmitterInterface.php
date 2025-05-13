@@ -1,0 +1,24 @@
+<?php
+declare(strict_types=1);
+
+namespace Demoniqus\CacheBundle\Interfaces\Common;
+
+
+interface DataTransmitterInterface
+{
+    public function put(
+        CacheStorageInterface $cacheStorage,
+        array $options,
+        string $key,
+        $data
+    ): void;
+
+    /**
+     * @return mixed
+     */
+    public function get(
+        CacheStorageInterface $cacheStorage,
+        string $key
+    );
+
+}
