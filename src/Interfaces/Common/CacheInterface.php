@@ -22,6 +22,10 @@ interface CacheInterface
      */
     public function get(string $key);
 
+    public function beginTransaction(): CacheInterface;
+
+    public function commit(): void;
+
     /**
      * Здесь можно проверять, существует ли такой ключ как непосредственно в хранилище, так и в памяти данного сервиса
      */
@@ -34,4 +38,12 @@ interface CacheInterface
      * @return CacheInterface
      */
     public function delete(string $key): CacheInterface;
+
+    public function hMSet(string $key, array $values, ?array $options): CacheInterface;
+    public function hSet(string $key, string $member, $value): CacheInterface;
+
+    public function hGet(string $key, string $member);
+    public function hGetAll(string $key);
+
+    public function expire(string $key, int $timeout, ?string $mode = null):CacheInterface;
 }
