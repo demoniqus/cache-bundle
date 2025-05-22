@@ -108,6 +108,11 @@ abstract class BaseCacheService implements CacheServiceInterface
         //TODO Dependencies
     }
 
+    protected function getDataGenerator(): DataGeneratorInterface
+    {
+        return $this->dataGenerator;
+    }
+
     public function get(ParamsBagInterface $paramsBag)
     {
         $this
