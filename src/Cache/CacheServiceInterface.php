@@ -1,7 +1,16 @@
 <?php
 
-
 declare(strict_types=1);
+
+/*
+ * This file is part of the package ITE product.
+ *
+ * Developer list:
+ * (c) Dmitry Antipov <demoniqus@mail.ru>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Demoniqus\CacheBundle\Cache;
 
@@ -15,23 +24,21 @@ interface CacheServiceInterface
     public function update(ParamsBagInterface $paramsBag);
 
     /**
-     * Get value from storage by key
+     * Get value from storage by key.
      *
      * @return mixed
      */
     public function get(ParamsBagInterface $paramsBag);
 
     /**
-     * Здесь можно проверять, существует ли такой ключ как непосредственно в хранилище, так и в памяти данного сервиса
+     * Здесь можно проверять, существует ли такой ключ как непосредственно в хранилище, так и в памяти данного сервиса.
      */
     public function has(ParamsBagInterface $paramsBag): bool;
 
     /**
-     * Delete key from storage
+     * Delete key from storage.
      */
     public function delete(ParamsBagInterface $paramsBag): bool;
 
-
     public function generateCacheKey(ParamsBagInterface $paramsBag): string;
-
 }

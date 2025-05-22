@@ -1,5 +1,16 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the package ITE product.
+ *
+ * Developer list:
+ * (c) Dmitry Antipov <demoniqus@mail.ru>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Demoniqus\CacheBundle\Cache;
 
@@ -22,16 +33,15 @@ abstract class BaseCacheService implements CacheServiceInterface
     // - некоторые данные меняются весьма часто ми для них можно устанавливать короткий срок жизни cache
     // Но во многих случаях срок жизни необходим, т.к. исходные данные могут быть просто удалены, а
     // cache станет неактуальным, никто не будет за ним обращаться - он будет тупо занимать место.
-    // \Redis::pexpire()
     /**
-     * Хранилище данных
+     * Хранилище данных.
      */
     private CacheStorageInterface $cacheStorage;
     /**
      * Ключ cache состоит из нескольких частей:
      * - prefix - определяется параметрами подключения к хранилищу
      * - key - идентификатор конкретного сервиса App\Cache
-     * - getCacheKey() - параметры на основе ParamsBag
+     * - getCacheKey() - параметры на основе ParamsBag.
      */
     private string $key;
 
@@ -53,15 +63,13 @@ abstract class BaseCacheService implements CacheServiceInterface
     private ?DataSerializerInterface $dataSerializer = null;
     private DataTransmitterInterface $dataTransmitter;
 
-
     public function __construct(
-        string                     $key,
-        CacheStorageInterface      $cacheStorage,
+        string $key,
+        CacheStorageInterface $cacheStorage,
         CacheKeyGeneratorInterface $cacheKeyGenerator,
-        DataGeneratorInterface     $dataGenerator,
-        DataTransmitterInterface   $dataTransmitter
-    )
-    {
+        DataGeneratorInterface $dataGenerator,
+        DataTransmitterInterface $dataTransmitter
+    ) {
         $this->cacheStorage = $cacheStorage;
         $this->key = $key;
         $this->cacheKeyGenerator = $cacheKeyGenerator;
@@ -73,13 +81,12 @@ abstract class BaseCacheService implements CacheServiceInterface
     {
         //TODO Заложить возможность dependency
         try {
-
             $options = [];
 
             $this
                 ->validateParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_UPDATE)
                 ->normalizeParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_UPDATE)
-                ->resolveOptions($paramsBag, CacheMethodModelInterface::CACHE_METHOD_UPDATE,$options);
+                ->resolveOptions($paramsBag, CacheMethodModelInterface::CACHE_METHOD_UPDATE, $options);
 
             $key = $this->generateCacheKey($paramsBag);
             $data = $this->dataGenerator->generate($paramsBag);
@@ -95,17 +102,14 @@ abstract class BaseCacheService implements CacheServiceInterface
 
             return $data;
         } catch (\Throwable $e) {
-            //TODO Обработать ошибку и соо
             return false;
         }
-
     }
-
 
     protected function put(ParamsBagInterface $paramsBag, array $options, string $key, $data): void
     {
         $this->dataTransmitter->put($this->cacheStorage, $options, $key, $data);
-        //TODO Dependencies
+        //TODO remove or update depended caches
     }
 
     protected function getDataGenerator(): DataGeneratorInterface
@@ -121,7 +125,7 @@ abstract class BaseCacheService implements CacheServiceInterface
             ;
         $data = $this->dataTransmitter->get($this->cacheStorage, $this->generateCacheKey($paramsBag));
 
-        return $this->dataSerializer && is_string($data) ? $this->dataSerializer->unserialize($data) : $data;
+        return $this->dataSerializer && \is_string($data) ? $this->dataSerializer->unserialize($data) : $data;
     }
 
     public function has(ParamsBagInterface $paramsBag): bool
@@ -135,7 +139,7 @@ abstract class BaseCacheService implements CacheServiceInterface
 
     public function delete(ParamsBagInterface $paramsBag): bool
     {
-        try {//TODO dependency
+        try {//TODO remove depended caches
             $this
                 ->validateParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_DELETE)
                 ->normalizeParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_DELETE)
@@ -148,11 +152,11 @@ abstract class BaseCacheService implements CacheServiceInterface
         return true;
     }
 
-
     public function generateCacheKey(ParamsBagInterface $paramsBag): string
     {
         return $this->cacheKeyGenerator->generate($this->key, $paramsBag);
     }
+
     protected function validateParams(ParamsBagInterface $paramsBag, string $action): self
     {
         foreach ($this->validators as $validator) {
@@ -161,6 +165,7 @@ abstract class BaseCacheService implements CacheServiceInterface
 
         return $this;
     }
+
     protected function normalizeParams(ParamsBagInterface $paramsBag, string $action): self
     {
         foreach ($this->normalizers as $normalizer) {
@@ -169,6 +174,7 @@ abstract class BaseCacheService implements CacheServiceInterface
 
         return $this;
     }
+
     protected function resolveOptions(ParamsBagInterface $paramsBag, string $action, array &$options): self
     {
         foreach ($this->optionsResolvers as $optionsResolver) {
@@ -181,21 +187,20 @@ abstract class BaseCacheService implements CacheServiceInterface
     public function addValidator($validator): self
     {
         /** @var CacheParamsValidatorInterface[] $validators */
-        $validators = is_array($validator) ? $validator : [$validator];
+        $validators = \is_array($validator) ? $validator : [$validator];
 
         foreach ($validators as $validator) {
-
             $this->validators[] = $validator;
         }
 
         return $this;
     }
+
     public function addNormalizer($normalizer): self
     {
-        $normalizers = is_array($normalizer) ? $normalizer : [$normalizer];
+        $normalizers = \is_array($normalizer) ? $normalizer : [$normalizer];
 
         foreach ($normalizers as $normalizer) {
-
             $this->normalizers[] = $normalizer;
         }
 
@@ -204,10 +209,9 @@ abstract class BaseCacheService implements CacheServiceInterface
 
     public function addOptionsResolver($resolver): self
     {
-        $resolvers = is_array($resolver) ? $resolver : [$resolver];
+        $resolvers = \is_array($resolver) ? $resolver : [$resolver];
 
         foreach ($resolvers as $resolver) {
-
             $this->optionsResolvers[] = $resolver;
         }
 
