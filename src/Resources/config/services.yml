@@ -1,3 +1,5 @@
+parameters:
+  dependedCacheServiceTag: !php/const Demoniqus\CacheBundle\Interfaces\BundleConstantsModelInterface::CACHE_DEPENDENCY_TAG
 services:
   _defaults:
     autowire: true
@@ -15,3 +17,7 @@ services:
 
   Demoniqus\CacheBundle\Interfaces\Common\DataTransmitterInterface: '@Demoniqus\CacheBundle\DataTransmitter\StringedDataTransmitter'
 
+  Demoniqus\CacheBundle\Dependencies\Resolver\DependedCacheServicesResolver:
+    arguments:
+      $cacheServices: !tagged '%dependedCacheServiceTag%'
+  Demoniqus\CacheBundle\Interfaces\DependedCacheServicesResolverInterface: '@Demoniqus\CacheBundle\Dependencies\Resolver\DependedCacheServicesResolver'

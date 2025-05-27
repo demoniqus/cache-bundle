@@ -14,8 +14,14 @@ declare(strict_types=1);
 
 namespace Demoniqus\CacheBundle\Interfaces;
 
-interface BundleConstantsModelInterface
+use Demoniqus\CacheBundle\Interfaces\Common\CacheServiceDependencyInterface;
+
+interface DependedCacheServicesResolverInterface
 {
-    public const CACHE_SERVICE_TAG = 'cache.service';
-    public const CACHE_DEPENDENCY_TAG = 'cache.dependency';
+    /**
+     * @return CacheServiceDependencyInterface[]
+     */
+    public function resolve(string $entityClass): array;
+
+    public function clear($entity);
 }
