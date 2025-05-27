@@ -225,6 +225,11 @@ abstract class BaseCacheService implements CacheServiceInterface
         return $this;
     }
 
+    public function getEntityParamName(): string
+    {
+        return $this->dataGenerator->getEntityParamName();
+    }
+
     protected function getCacheStorage(): CacheStorageInterface
     {
         return $this->cacheStorage;

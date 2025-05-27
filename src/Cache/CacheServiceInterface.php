@@ -41,4 +41,6 @@ interface CacheServiceInterface
     public function delete(ParamsBagInterface $paramsBag): bool;
 
     public function generateCacheKey(ParamsBagInterface $paramsBag): string;
+
+    public function getEntityParamName(): string;
 }
