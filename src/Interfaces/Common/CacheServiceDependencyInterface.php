@@ -19,9 +19,11 @@ use Demoniqus\CacheBundle\Cache\CacheServiceInterface;
 
 interface CacheServiceDependencyInterface
 {
+    public const OPTION_FORCE_RELOAD = 'forceReload';
+
     public function getDependsOnClass(): string;
 
-    public function getDependedEntities($entity, bool $forceReload = false): array;
+    public function getDependedEntities($entity, array $options = []): array;
 
     public function getDependedCacheService(): CacheServiceInterface;
 }

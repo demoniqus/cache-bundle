@@ -38,14 +38,16 @@ abstract class AbstractCacheServiceDependency implements CacheServiceDependencyI
         $this->dependsOn = $dependsOn;
     }
 
-    public function getDependedEntities($entity, bool $forceReload = false): array
+    public function getDependedEntities($entity, array $options = []): array
     {
         $hash = spl_object_hash($entity);
+        $forceReload = $options[self::OPTION_FORCE_RELOAD] ?? false;
+
         return !$forceReload && isset($this->cache[$hash]) ?
             $this->cache[$hash] :
-            ($this->cache[$hash] = $this->loadDependedEntities($entity));
+            ($this->cache[$hash] = $this->loadDependedEntities($entity, $options));
     }
-    abstract protected function loadDependedEntities($entity): array;
+    abstract protected function loadDependedEntities($entity, array $options): array;
 
     public function getDependsOnClass(): string
     {

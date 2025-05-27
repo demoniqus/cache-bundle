@@ -23,5 +23,5 @@ interface DependedCacheServicesResolverInterface
      */
     public function resolve(string $entityClass): array;
 
-    public function clear($entity);
+    public function clear($entity, array $options = []);
 }

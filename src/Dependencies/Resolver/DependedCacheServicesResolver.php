@@ -52,7 +52,7 @@ class DependedCacheServicesResolver implements DependedCacheServicesResolverInte
         return [];
     }
 
-    public function clear($entity)
+    public function clear($entity, array $options = [])
     {
         $dependencies = $this->resolve(get_class($entity));
 
@@ -60,7 +60,7 @@ class DependedCacheServicesResolver implements DependedCacheServicesResolverInte
             $paramsBag = new ParamsBag();
             $cacheService = $dependency->getDependedCacheService();
 
-            foreach ($dependency->getDependedEntities($entity, false) as $dependedEntity) {
+            foreach ($dependency->getDependedEntities($entity, $options) as $dependedEntity) {
 
                 $paramsBag->setParam($cacheService->getEntityParamName(), $dependedEntity);
                 $cacheService->delete($paramsBag);
