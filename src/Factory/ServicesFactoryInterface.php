@@ -19,4 +19,6 @@ use Demoniqus\CacheBundle\Cache\CacheServiceInterface;
 interface ServicesFactoryInterface
 {
     public function getService(string $serviceAlias): CacheServiceInterface;
+
+    public function getServiceKey(CacheServiceInterface $instance): string;
 }
