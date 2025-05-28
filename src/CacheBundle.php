@@ -20,8 +20,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class CacheBundle extends Bundle
 {
-    public const CACHE_BUNDLE = 'cache';
-
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

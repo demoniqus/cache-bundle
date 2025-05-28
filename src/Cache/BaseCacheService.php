@@ -79,7 +79,6 @@ abstract class BaseCacheService implements CacheServiceInterface
 
     public function update(ParamsBagInterface $paramsBag)
     {
-        //TODO Заложить возможность dependency
         try {
             $options = [];
 
@@ -109,13 +108,9 @@ abstract class BaseCacheService implements CacheServiceInterface
     protected function put(ParamsBagInterface $paramsBag, array $options, string $key, $data): void
     {
         $this->dataTransmitter->put($this->cacheStorage, $options, $key, $data);
-        //TODO remove or update depended caches
     }
 
-    protected function getDataGenerator(): DataGeneratorInterface
-    {
-        return $this->dataGenerator;
-    }
+
 
     public function get(ParamsBagInterface $paramsBag)
     {
@@ -139,7 +134,7 @@ abstract class BaseCacheService implements CacheServiceInterface
 
     public function delete(ParamsBagInterface $paramsBag): bool
     {
-        try {//TODO remove depended caches
+        try {
             $this
                 ->validateParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_DELETE)
                 ->normalizeParams($paramsBag, CacheMethodModelInterface::CACHE_METHOD_DELETE)

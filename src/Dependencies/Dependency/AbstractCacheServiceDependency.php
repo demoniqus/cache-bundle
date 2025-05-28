@@ -17,16 +17,12 @@ namespace Demoniqus\CacheBundle\Dependencies\Dependency;
 use Demoniqus\CacheBundle\Cache\CacheServiceInterface;
 use Demoniqus\CacheBundle\Interfaces\Common\CacheServiceDependencyInterface;
 
-/**
- * Класс описывает зависимость кэша от сущности, но не от другого кэша.
- * В этом случае порядок расчета не имеет значения
- */
 abstract class AbstractCacheServiceDependency implements CacheServiceDependencyInterface
 {
     private CacheServiceInterface $cacheService;
     private array $cache = [];
     /**
-     * Кэш зависит от сущности, а не от другого кэша
+     * Cache depends on some entity but from another cache.
      */
     protected string $dependsOn;
 
